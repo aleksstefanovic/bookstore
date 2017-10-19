@@ -6,8 +6,10 @@ import {
     render
 } from 'react-dom';
 
-import App from '../imports/ui/App.jsx';
+import Home from '../imports/ui/home/home.jsx';
+import Nav from '../imports/ui/nav/nav.jsx';
 
 Meteor.startup(() => {
-    render(<App />, document.getElementById('render-target'));
+    render(<Nav />, document.getElementById('nav'));
+    render(<Home />, document.getElementById('app'));
 });

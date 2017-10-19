@@ -1,1 +1,25 @@
-/* CSS declarations go here */
+html, body {
+    background-color: #383838;
+}
+
+a {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.book-store-button {
+    background: #FFFFFF;
+    color: #141414 !important;
+}
+
+.book-store-nav {
+    margin-top: 20px;
+}
+
+.book-store-dark {
+    background-color: #383838;
+}
+
+.book-store-light {
+    color: #FFFFFF;
+}
