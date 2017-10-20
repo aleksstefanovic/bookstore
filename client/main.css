@@ -1,11 +1,12 @@
 html, body {
     background-color: #383838;
+    height: 100%;
+    width: 100%;
 }
 
-a {
+a, label {
     font-family: 'Montserrat', sans-serif;
 }
-
 
 .book-store-button {
     background: #FFFFFF;
@@ -20,6 +21,14 @@ a {
     background-color: #383838;
 }
 
+.book-store-not-dark {
+    background-color: #FFFFFF;
+}
+
 .book-store-light {
     color: #FFFFFF;
+}
+
+.center {
+    text-align: center;
 }

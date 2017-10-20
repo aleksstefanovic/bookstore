@@ -8,7 +8,7 @@ import React, {
 export default class Home2 extends Component {
     render() {
         return (
-            <div>
+            <div className="container book-store-home-section">
                 ABOUT
             </div>
         );

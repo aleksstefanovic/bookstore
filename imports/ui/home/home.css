@@ -4,3 +4,11 @@
     box-sizing: border-box;
     border-radius: 30px;
 }
+
+.book-store-home-section {
+    height:100%;
+}
+
+.book-store-home-search {
+    margin-top: 10%;
+}

@@ -24,11 +24,19 @@ export default class Home extends Component {
 
     render() {
         return (
-            <div>
-              {this.renderHome1()}
-              {this.renderHome2()}
-              {this.renderHome3()}
-              {this.renderHome4()}
+            <div className="book-store-home-section">
+                <div className="book-store-home-section book-store-dark">
+                  {this.renderHome1()}
+                </div>
+                <div className="book-store-home-section book-store-not-dark">
+                  {this.renderHome2()}
+                </div>
+                <div className="book-store-home-section book-store-not-dark">
+                  {this.renderHome3()}
+                </div>
+                <div className="book-store-home-section book-store-not-dark">
+                  {this.renderHome4()}
+                </div>
             </div>
         );
     }
