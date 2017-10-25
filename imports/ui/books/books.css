@@ -1,3 +1,17 @@
 .book-store-books-section {
-    
+    height:100%;
+}
+
+.book-store-books-button {
+    padding-right: 2rem !important;
+    padding-left: 2rem !important;
+
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.book-store-books-card {
+    margin-top: 3rem;
+    margin-left: 3rem;
+    width: 20rem;
 }

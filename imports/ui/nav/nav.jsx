@@ -16,13 +16,13 @@ export default class Nav extends Component {
                 <a className="nav-link book-store-nav-hover book-store-nav-item" href="/">Home</a>
               </li>
               <li className="nav-item active">
-                <a className="nav-link book-store-nav-hover book-store-nav-item" href="/books">Category 1</a>
+                <a className="nav-link book-store-nav-hover book-store-nav-item" href="/books?filter=fiction">Fiction</a>
               </li>
               <li className="nav-item active">
-                <a className="nav-link book-store-nav-hover book-store-nav-item" href="/books">Category 2</a>
+                <a className="nav-link book-store-nav-hover book-store-nav-item" href="/books?filter=nonfiction">Non-Fiction</a>
               </li>
               <li className="nav-item active">
-                <a className="nav-link book-store-nav-hover book-store-nav-item" href="/books">Category 3</a>
+                <a className="nav-link book-store-nav-hover book-store-nav-item" href="/books?filter=magazines">Magazines</a>
               </li>
 
             </ul>
