@@ -1,7 +1,10 @@
 html, body {
-    background-color: #383838;
     height: 100%;
     width: 100%;
+}
+
+body {
+    background-color: #383838;
 }
 
 a, label, button, p {

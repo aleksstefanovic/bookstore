@@ -11,7 +11,13 @@
 }
 
 .book-store-books-card {
-    margin-top: 3rem;
-    margin-left: 3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
     width: 20rem;
+}
+
+.book-store-book-qty {
+    width: 5rem;
 }

@@ -11,7 +11,7 @@ export default class BookCard extends Component {
                 <img className="card-img-top" src={this.props.book.thumbnail} alt="Card image cap" />
                 <div className="card-body book-store-medium-dark">
                   <h4 className="card-title">{this.props.book.title}</h4>
-                  <p className="card-text">{this.props.book.description}</p>
+                  <p className="card-text">{this.props.book.shortdescription}</p>
                   <button className="btn-light book-store-books-button" type="submit" onClick={this.viewBook.bind(this)}>VIEW</button>
                 </div>
               </div>
@@ -20,7 +20,7 @@ export default class BookCard extends Component {
 
     viewBook() {
         var id = this.props.id;
-        browserHistory.push('/book/' + id);
+        browserHistory.push('/books/' + id);
     }
 }
 

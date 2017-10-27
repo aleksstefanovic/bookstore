@@ -2,6 +2,7 @@ import React, {
     Component
 } from 'react';
 import styles from './home.css'
+import background from '../../../client/background.css'
 import Home1 from './home1.jsx';
 import Home2 from './home2.jsx';
 import Home3 from './home3.jsx';
