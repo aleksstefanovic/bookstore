@@ -2,8 +2,14 @@ import React, {
     Component
 } from 'react';
 import {
+    Meteor
+} from 'meteor/meteor';
+import {
     BooksDB
 } from '../../api/books.js';
+import {
+    CartsDB
+} from '../../api/carts.js';
 import {
     createContainer
 } from 'meteor/react-meteor-data';
@@ -46,7 +52,7 @@ class Books extends Component {
                             <p>${this.props.book.price}</p>
                             <div className="row">
                                 <div className="col-2">
-                                    <input type="number" className="form-control book-store-book-qty" />
+                                    <input type="number" ref="qty" className="form-control book-store-book-qty" />
                                 </div>
                                 <div className="col-2">
                                     <button className="btn-dark" type="submit" onClick={this.addToCart.bind(this)}>ADD TO CART</button>
@@ -72,7 +78,43 @@ class Books extends Component {
     }
 
     addToCart () {
-        alert("Added to cart!");
+        var currentUser = Meteor.user ();
+        
+        if (currentUser) {
+            var qty = parseInt(this.refs.qty.value);
+
+            if (qty < 0 || !qty) {
+                alert("Must add at least one quantity to cart!");
+            }
+            else {
+                var userId = currentUser._id;
+                var cartObj = CartsDB.findOne ({ "user":userId });
+
+                if (cartObj) {
+                    Meteor.call ('findItem', this.props.book._id, cartObj.items,  (error, result) => {
+                        var index = parseInt(result);
+                        if (index) {
+                            
+                        }
+                    });
+                }
+                else {
+                    var item = {
+                        "itemId":this.props.book._id,
+                        "qty":qty
+                    };
+                    cartObj = {
+                        "user":userId,
+                        "items":[item]
+                    };
+                    CartsDB.insert(cartObj);
+                    alert("Added to cart");
+                }
+            }
+        }
+        else {
+            alert ("Please sign in before adding to cart!");
+        }
     }
 }
 
@@ -93,8 +135,8 @@ export default createContainer((props) => {
         search = props.location.pathname;
         searchParam = search.split("/")[2]; 
         if (searchParam) {
-            var objId = new Mongo.ObjectID(searchParam);
-            book = BooksDB.findOne ({"_id":objId});
+            //var objId = new Mongo.ObjectID(searchParam);
+            book = BooksDB.findOne ({"_id":searchParam});
         }
     }
 

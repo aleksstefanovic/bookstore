@@ -14,6 +14,10 @@ a, label, button, p {
 .book-store-button {
     background: #FFFFFF;
     color: #141414 !important;
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
 }
 
 .book-store-nav {
@@ -39,4 +43,15 @@ a, label, button, p {
 
 .center {
     text-align: center;
+}
+
+.book-store-section {
+    height: 100%
+}
+
+.book-store-input {
+    opacity: 0.2;
+    border: 1px solid #FFFFFF !important;
+    box-sizing: border-box;
+    width:25% !important;
 }
