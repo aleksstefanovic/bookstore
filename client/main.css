@@ -55,3 +55,8 @@ a, label, button, p {
     box-sizing: border-box;
     width:25% !important;
 }
+
+.book-store-row-image {
+   height: 3rem;
+   width: 3rem; 
+}

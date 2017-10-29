@@ -49,7 +49,7 @@ class Books extends Component {
                             </div>
 
                         </div>
-                            <p>${this.props.book.price}</p>
+                            <p>${this.props.book.cost}</p>
                             <div className="row">
                                 <div className="col-2">
                                     <input type="number" ref="qty" className="form-control book-store-book-qty" />
@@ -88,14 +88,26 @@ class Books extends Component {
             }
             else {
                 var userId = currentUser._id;
-                var cartObj = CartsDB.findOne ({ "user":userId });
+                var cartObj = CartsDB.findOne (
+                    {
+                        "user":userId,
+                        "checkout":false
+                    }
+                );
 
                 if (cartObj) {
                     Meteor.call ('findItem', this.props.book._id, cartObj.items,  (error, result) => {
                         var index = parseInt(result);
                         if (index) {
-                            
+                            cartObj.items[index].qty = parseInt(cartObj.items[index].qty) + parseInt(qty);
                         }
+                        else {
+                            cartObj.items.push ({
+                                "itemId":this.props.book._id,
+                                "qty":qty
+                            });
+                        }
+                        CartsDB.update ({"_id":cartObj._id}, cartObj);
                     });
                 }
                 else {
@@ -105,10 +117,10 @@ class Books extends Component {
                     };
                     cartObj = {
                         "user":userId,
+                        "checkout":false,
                         "items":[item]
                     };
                     CartsDB.insert(cartObj);
-                    alert("Added to cart");
                 }
             }
         }

@@ -35,7 +35,7 @@ class Nav extends Component {
             </ul>
             <ul className="navbar-nav">
               <li className="nav-item active">
-                <a className="nav-link book-store-nav-hover book-store-nav-cart book-store-nav-item" href="/cart">CART <span>{this.props.cartCount}</span></a>
+                <a className="nav-link book-store-nav-hover book-store-nav-cart book-store-nav-item" href="/carts">CART <span>{this.props.cartCount}</span></a>
               </li>
               <li className="nav-item active" style={this.props.showSignIn}>
                 <a className="nav-link book-store-button book-store-nav-item" href="/signin">SIGN IN</a>
@@ -60,9 +60,19 @@ export default createContainer((props) => {
         userObj.showSignIn = {};
         userObj.showSignIn = {"display":"none"};
 
-        var cartObj = CartsDB.findOne ({ "user": userObj.user._id});
+        //var cartObj = CartsDB.findOne ({ "user": userObj.user._id});
+        var cartObj = CartsDB.findOne (
+            {
+                "user":userObj.user._id,
+                "checkout":false
+            }
+        );
         if (cartObj) {
-           userObj.cartCount = cartObj.items.length; 
+            var count = 0; 
+            for (var i=0; i < cartObj.items.length; i++) {
+                count = count + parseInt(cartObj.items[i].qty);
+            }
+            userObj.cartCount = count; 
         }
     }
     else {
