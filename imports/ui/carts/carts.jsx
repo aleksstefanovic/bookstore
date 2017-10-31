@@ -16,45 +16,58 @@ import CartRow from '../../components/cartRow/cartRow.jsx';
 
 class Carts extends Component {
     render() {
-        return (
-                <div className="book-store-section">
-                    <br/>
-                    <br/>
-                    <div className="container book-store-section">
-                        <p>{this.props.orderTitle}</p>
+        if (this.props.items.length == 0) {
+            return (
+                    <div className="book-store-section">
                         <br/>
-            
-                        <table className="table table-responsive">
-                          <tbody>   
-                            {this.renderCartRow()}
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td>TOTAL</td>
-                            </tr>
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td>${this.props.total}</td>
-                            </tr>
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td>
-                                <button className="btn-dark" type="submit" onClick={this.checkout.bind(this)}>CHECKOUT</button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>                        
+                        <br/>
+                        <div className="container book-store-section">
+                            <p>{this.props.message}</p>
+                        </div>
                     </div>
-                </div>
-        );
+            );
+        }
+        else {
+            return (
+                    <div className="book-store-section">
+                        <br/>
+                        <br/>
+                        <div className="container book-store-section">
+                            <p>{this.props.orderTitle}</p>
+                            <br/>
+                
+                            <table className="table table-responsive">
+                              <tbody>   
+                                {this.renderCartRow()}
+                                <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>TOTAL</td>
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>${this.props.total}</td>
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>
+                                    <button className="btn-dark" type="submit" onClick={this.checkout.bind(this)}>CHECKOUT</button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>                        
+                        </div>
+                    </div>
+            );
+        }
     }
     
     checkout () {
@@ -70,7 +83,7 @@ class Carts extends Component {
 
 export default createContainer((props) => {
     var currentUser = Meteor.user();
-    var cartObj = {"items":[], "total":0.00};
+    var cartObj = {"items":[], "total":0.00, "message":"Please sign in to view your cart"};
 
     if (currentUser) {
         Meteor.call('logToConsole', "Showing user profile for " + JSON.stringify(currentUser));
@@ -84,7 +97,7 @@ export default createContainer((props) => {
             if (obj) {
                 obj.orderTitle = "PAST ORDER";
                 if (obj.user != currentUser._id) {
-                   obj = null; 
+                   obj = {"message":"You do not have permission to view this"};
                 }
             }
         }
@@ -98,16 +111,23 @@ export default createContainer((props) => {
             if (obj) {
                 obj.orderTitle = "CURRENT ORDER";
             }
+            else {
+                obj = {"orderTitle":"CURRENT ORDER", "message":"There are no items in your cart"}
+            }
         }
 
         if (obj) {
             cartObj = obj; 
+            if (!cartObj.items) {
+                cartObj.items = [];
+            }
+
             var total = 0.00;
             for (var i=0; i < cartObj.items.length; i++) {
                 var itemObj = BooksDB.findOne ({"_id":cartObj.items[i].itemId}); 
                 cartObj.items[i].obj = itemObj;
 
-                total = total + parseInt(cartObj.items[i].qty) * parseInt(cartObj.items[i].obj.cost);
+                total = total + parseInt(cartObj.items[i].qty) * parseFloat(cartObj.items[i].obj.cost);
             } 
             cartObj.total = total;
         }
@@ -115,6 +135,7 @@ export default createContainer((props) => {
     else {
         Meteor.call('logToConsole', "No user signed in");
     }
-  
+ 
+    console.log(cartObj); 
     return cartObj;
 }, Carts)
