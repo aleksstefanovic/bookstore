@@ -42,10 +42,11 @@ class Books extends Component {
                             <div className="col">
                                 <h4>{this.props.book.title}</h4>
                                 <h5>{this.props.book.author}</h5>
-                                <p>{this.props.book.description}</p> 
+                                <p>{this.props.book.shortDescription}</p> 
+                                <p>{this.props.book.longDescription}</p>
                             </div>
                             <div className="col">
-                                  <img className="mx-auto d-block" src={this.props.book.thumbnail} alt="Book Image" />
+                                  <img className="mx-auto d-block" src={this.props.book.image} alt="Book Image" />
                             </div>
 
                         </div>
