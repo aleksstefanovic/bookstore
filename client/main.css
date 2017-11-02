@@ -58,5 +58,9 @@ a, label, button, p {
 
 .book-store-row-image {
    height: 3rem;
-   width: 3rem; 
+   width: 4rem; 
+}
+
+.book-store-small-input {
+    width: 3rem;
 }

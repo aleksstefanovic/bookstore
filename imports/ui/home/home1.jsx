@@ -20,12 +20,23 @@ export default class Home1 extends Component {
                 </form>
             </div>
             <div>
-              <input className="book-store-dark book-store-social" type="image" src="/images/twitter.svg" />
-              <input className="book-store-dark book-store-social" type="image" src="/images/facebook.svg" />
-              <input className="book-store-dark book-store-social" type="image" src="/images/googleplus.svg" />
+              <input className="book-store-dark book-store-social" type="image" src="/images/twitter.svg" onClick={this.goToTwitter}/>
+              <input className="book-store-dark book-store-social" type="image" src="/images/facebook.svg" onClick={this.goToFacebook}/>
+              <input className="book-store-dark book-store-social" type="image" src="/images/googleplus.svg" onClick={this.goToGooglePlus}/>
             </div>
             </div>
         );
     }
 
+    goToTwitter () {
+        window.open ("https://www.twitter.com");
+    }
+
+    goToFacebook () {
+        window.open ("https://www.facebook.com");
+    }
+
+    goToGooglePlus () {
+        window.open ("https://www.plus.google.com");
+    }
 }

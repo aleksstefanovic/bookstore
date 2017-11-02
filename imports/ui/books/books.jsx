@@ -16,7 +16,6 @@ import {
 import { Mongo } from 'meteor/mongo'
 import BookCard from '../../components/bookCard/bookCard.jsx';
 import styles from './books.css';
-//import background from '../../../client/background.css'
 
 class Books extends Component {
     renderBooks() {
@@ -39,23 +38,23 @@ class Books extends Component {
                     <br/>
                     <div className="container book-store-books-section">
                         <div className="row">
-                            <div className="col">
+                            <div className="col-5">
                                 <h4>{this.props.book.title}</h4>
                                 <h5>{this.props.book.author}</h5>
                                 <p>{this.props.book.shortDescription}</p> 
                                 <p>{this.props.book.longDescription}</p>
                             </div>
-                            <div className="col">
-                                  <img className="mx-auto d-block" src={this.props.book.image} alt="Book Image" />
+                            <div className="col-5">
+                                  <img className="book-store-image" src={this.props.book.image} alt="Book Image" />
                             </div>
 
                         </div>
                             <p>${this.props.book.cost}</p>
                             <div className="row">
-                                <div className="col-2">
+                                <div className="col-4">
                                     <input type="number" ref="qty" className="form-control book-store-book-qty" />
                                 </div>
-                                <div className="col-2">
+                                <div className="col-4">
                                     <button className="btn-dark" type="submit" onClick={this.addToCart.bind(this)}>ADD TO CART</button>
                                 </div>
                             </div>
@@ -98,8 +97,8 @@ class Books extends Component {
 
                 if (cartObj) {
                     Meteor.call ('findItem', this.props.book._id, cartObj.items,  (error, result) => {
-                        var index = parseInt(result);
-                        if (index) {
+                        if (result != null && result != undefined && result != NaN) {
+                            var index = parseInt(result);
                             cartObj.items[index].qty = parseInt(cartObj.items[index].qty) + parseInt(qty);
                         }
                         else {
@@ -163,6 +162,12 @@ export default createContainer((props) => {
                 },
                 {
                     "genre": {
+                        $regex: "^(.*?(" + searchText + ")[^$]*)$",
+                        $options: 'i'
+                    }
+                },
+                {
+                    "author": {
                         $regex: "^(.*?(" + searchText + ")[^$]*)$",
                         $options: 'i'
                     }

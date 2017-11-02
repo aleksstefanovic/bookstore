@@ -44,9 +44,11 @@ class Carts extends Component {
                                   <td></td>
                                   <td></td>
                                   <td></td>
+                                  <td></td>
                                   <td>TOTAL</td>
                                 </tr>
                                 <tr>
+                                  <td></td>
                                   <td></td>
                                   <td></td>
                                   <td></td>
@@ -58,8 +60,9 @@ class Carts extends Component {
                                   <td></td>
                                   <td></td>
                                   <td></td>
+                                  <td></td>
                                   <td>
-                                    <button className="btn-dark" type="submit" onClick={this.checkout.bind(this)}>CHECKOUT</button>
+                                    <button style={this.props.showCheckout} className="btn-dark" type="submit" onClick={this.checkout.bind(this)}>CHECKOUT</button>
                                   </td>
                                 </tr>
                               </tbody>
@@ -69,6 +72,7 @@ class Carts extends Component {
             );
         }
     }
+
     
     checkout () {
         browserHistory.push('/checkout');
@@ -95,7 +99,14 @@ export default createContainer((props) => {
         if (searchParam) {
             obj = CartsDB.findOne ({"_id":searchParam});
             if (obj) {
-                obj.orderTitle = "PAST ORDER";
+                if (obj.checkout) {
+                    obj.orderTitle = "PAST ORDER";
+                    obj.showCheckout = {"display":"none"};
+                }
+                else {
+                    obj.orderTitle = "CURRENT ORDER";
+                    obj.showCheckout = {};
+                }
                 if (obj.user != currentUser._id) {
                    obj = {"message":"You do not have permission to view this"};
                 }
@@ -110,6 +121,7 @@ export default createContainer((props) => {
             );
             if (obj) {
                 obj.orderTitle = "CURRENT ORDER";
+                obj.showCheckout = {};
             }
             else {
                 obj = {"orderTitle":"CURRENT ORDER", "message":"There are no items in your cart"}
@@ -126,6 +138,16 @@ export default createContainer((props) => {
             for (var i=0; i < cartObj.items.length; i++) {
                 var itemObj = BooksDB.findOne ({"_id":cartObj.items[i].itemId}); 
                 cartObj.items[i].obj = itemObj;
+                cartObj.items[i].cartId = cartObj._id;
+                
+                if (cartObj.checkout) {
+                    cartObj.items[i].enableChange = {"display":"none"};
+                    cartObj.items[i].disableChange = {};
+                }
+                else {
+                    cartObj.items[i].disableChange = {"display":"none"};
+                    cartObj.items[i].enableChange = {};
+                }
 
                 total = total + parseInt(cartObj.items[i].qty) * parseFloat(cartObj.items[i].obj.cost);
             } 
@@ -136,6 +158,5 @@ export default createContainer((props) => {
         Meteor.call('logToConsole', "No user signed in");
     }
  
-    console.log(cartObj); 
     return cartObj;
 }, Carts)
